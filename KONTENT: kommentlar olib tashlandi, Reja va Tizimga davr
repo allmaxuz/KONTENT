@@ -139,7 +139,7 @@ function nav() {
 }
 $('tab').onclick = e => { const b = e.target.closest('button'); if (!b) return; BET = b.dataset.t; nav(); chiz(); window.scrollTo(0, 0); if (tg && tg.HapticFeedback) tg.HapticFeedback.selectionChanged(); };
 $('rf').onclick = () => yangila(true, true);
-const BOL = { asosiy, reels, story, dizayn, ai, koproq, reja, obunachi, komment, tizim };
+const BOL = { asosiy, reels, story, dizayn, ai, koproq, reja, obunachi, tizim };
 function chiz(saqla) {
   if (!D) return; const y = window.scrollY;
   try { $('ek').innerHTML = BOL[BET](); } catch (e) { $('ek').innerHTML = '<div class="err">❌ ' + esc(e.message) + '</div>'; }
@@ -171,7 +171,6 @@ function asosiy() {
     const kor = L.map(o => num(o["Reels ko'rishlari"])), mx = Math.max(1, ...kor);
     const kk = ((arr) => arr.reduce((m, o) => (m[o['Kontent turi'] || '—'] = (m[o['Kontent turi'] || '—'] || 0) + 1, m), {}))(D.R.filter(o => inD(o.Sana, a, b) && !String(o['Kontent turi'] || '').trim()));
     const yoqR = D.R.filter(o => inD(o.Sana, a, b) && !String(o['Kontent turi'] || '').trim()).length, yoqS = D.S.filter(o => inD(o.Sana, a, b) && !String(o['Story turi'] || '').trim()).length;
-    const jav = rows(D.komment).filter(o => o['Javob berilgan'] === "Yo'q").length;
     return bk() + davrHtml() + `<div class="tiles">
       ${tile('Reels', n0(s('Reels')) + ' / ' + n0(s('Reels reja')), pr(s('Reels') / (s('Reels reja') || 1)) + ' reja', s('Reels') / (s('Reels reja') || 1))}
       ${tile('Story', n0(s('Story')) + ' / ' + n0(s('Story reja')), pr(s('Story') / (s('Story reja') || 1)) + ' reja', s('Story') / (s('Story reja') || 1))}
@@ -183,8 +182,7 @@ function asosiy() {
       <div class="card"><h3>Reels ko'rishlari · kunlar</h3><div class="cols">${kor.map((v, i) => `<i style="height:${Math.round(v / mx * 100)}%" title="${dm(L[i].Sana)} · ${n0(v)}"></i>`).join('')}</div></div>
       <div class="card"><h3>Diqqat talab qiladi</h3>
         <div class="row"><div style="flex:1">Turi aniq emas · reels</div><b class="${yoqR ? 'warn' : 'ok'}">${yoqR}</b></div>
-        <div class="row"><div style="flex:1">Turi bo'sh · story</div><b class="${yoqS ? 'warn' : 'ok'}">${yoqS}</b></div>
-        <div class="row"><div style="flex:1">Javobsiz kommentlar (30 kun)</div><b class="${jav ? 'warn' : 'ok'}">${jav}</b></div></div>
+        <div class="row"><div style="flex:1">Turi bo'sh · story</div><b class="${yoqS ? 'warn' : 'ok'}">${yoqS}</b></div></div>
       ${D.ai ? `<div class="card"><h3>AI tahlil · ${esc(D.ai.hafta || '')}</h3><div>${esc(D.ai.tahlil || '')}</div>${(D.ai.goyalar || []).length ? `<h3 style="margin-top:12px">5 ta g'oya</h3>` + D.ai.goyalar.map((g, i) => `<div class="row"><b>${i + 1}.</b><div><span class="pill">${esc(g.tur)}</span> ${esc(g.goya)}</div></div>`).join('') : ''}</div>` : ''}`;
   }
   const reels = !!D.reels, L = (reels ? D.R : D.S).filter(o => inD(o.Sana, a, b)), norma = (reels ? D.norma.reels : D.norma.story) * kunlar(a, b), sum = L.reduce((x, o) => x + num(o["Ko'rishlar"]), 0);
@@ -237,7 +235,7 @@ function dizayn() {
 
 // ---------- KO'PROQ ----------
 function koproq() {
-  const l = [['reja', '📋', 'Reja', true], ['obunachi', '👥', 'Obunachilar', !!D.obunachi], ['komment', '💬', 'Kommentlar', !!D.komment], ['tizim', '⚙️', 'Tizim', !!D.tizim]].filter(x => x[3]);
+  const l = [['reja', '📋', 'Reja', true], ['obunachi', '👥', 'Obunachilar', !!D.obunachi], ['tizim', '⚙️', 'Tizim', !!D.tizim]].filter(x => x[3]);
   return `<div class="card">${l.map(x => `<div class="row" data-go="${x[0]}" style="cursor:pointer"><div style="font-size:20px">${x[1]}</div><div style="flex:1;font-weight:600;padding-top:2px">${x[2]}</div><div class="muted">›</div></div>`).join('')}</div>`;
 }
 function koproqUlash() { document.querySelectorAll('[data-go]').forEach(r => r.onclick = () => { BET = r.dataset.go; chiz(); window.scrollTo(0, 0); }); }
@@ -245,9 +243,9 @@ function koproqUlash() { document.querySelectorAll('[data-go]').forEach(r => r.o
 function reja() {
   const L = D.J.filter(o => o.Sana).sort((a, b) => a.Sana - b.Sana), bugun = kunKey(Date.now()), g = {};
   L.forEach(o => { const k = kunKey(o.Sana); (g[k] = g[k] || []).push(o); });
-  const ks = Object.keys(g).sort().filter(k => k >= qosh(bugun, -7)), bel = h => /✔/.test(h) ? '<span class="ok">✔</span>' : /✖/.test(h) ? '<span class="bad">✖</span>' : '<span class="muted">…</span>';
-  const bajar = L.filter(o => kunKey(o.Sana) < bugun), ok = bajar.filter(o => /✔/.test(o.Holat)).length;
-  return back() + (bajar.length ? `<div class="tiles">${tile("O'tgan kunlar", ok + ' / ' + bajar.length, 'rejaga mos', ok / bajar.length)}${tile('Bugun', (g[bugun] || []).length + ' ta', 'rejada')}</div>` : '') +
+  const [da, db] = davr(), ks = Object.keys(g).sort().filter(k => k >= da && (k <= db || k > bugun)), bel = h => /✔/.test(h) ? '<span class="ok">✔</span>' : /✖/.test(h) ? '<span class="bad">✖</span>' : '<span class="muted">…</span>';
+  const bajar = L.filter(o => kunKey(o.Sana) < bugun && kunKey(o.Sana) >= da && kunKey(o.Sana) <= db), ok = bajar.filter(o => /✔/.test(o.Holat)).length;
+  return back() + davrHtml() + (bajar.length ? `<div class="tiles">${tile("O'tgan kunlar", ok + ' / ' + bajar.length, 'rejaga mos', ok / bajar.length)}${tile('Bugun', (g[bugun] || []).length + ' ta', 'rejada')}</div>` : '') +
     (ks.length ? ks.map(k => `<div style="font-weight:700;margin:12px 2px 6px">${kunNomi(k)} · ${sana2(k)}${k === bugun ? ' · <span class="pill">bugun</span>' : ''}</div><div class="card">` + g[k].map(o => `<div class="row">${bel(o.Holat)}<div>${o.Turi === 'Reels' ? '🎬' : '📱'} <b>${esc(o['Kontent turi'])}</b><div class="muted" style="font-size:13px">${esc(o["G'oya"] || '')}</div></div></div>`).join('') + '</div>').join('') : '<div class="empty">Reja hali tuzilmagan.</div>');
 }
 const back = () => `<div class="chips"><button class="chip" onclick="BET='koproq';chiz()">← Ko'proq</button></div>`;
@@ -257,23 +255,17 @@ function obunachi() {
   return back() + davrHtml() + `<div class="tiles">${tile('Instagram', n0(ox['Jami obunachi']), 'davrda ' + sgn(sm))}${tile("Obuna bo'lgan", n0(ob), 'davrda')}${tile('Telegram @allmaxuz', n0(tx.Obunachi), tx["O'sish"] != null ? 'kecha ' + sgn(tx["O'sish"]) : '')}${tile("O'rtacha o'sish", sgn(L.length ? sm / L.length : 0), 'kuniga')}</div>
     <div class="card"><h3>Kunlik o'sish</h3><div class="cols">${L.map(o => `<i style="height:${Math.round(Math.abs(num(o["O'sish"])) / mx * 100)}%;${num(o["O'sish"]) < 0 ? 'background:var(--r)' : ''}" title="${dm(o.Sana)} · ${sgn(o["O'sish"])}"></i>`).join('')}</div></div>`;
 }
-function komment() {
-  const [a, b] = davr(), L = rows(D.komment).filter(o => inD(o.Sana, a, b)).sort((x, y) => y.Sana - x.Sana), jav = L.filter(o => o['Javob berilgan'] === "Yo'q").length;
-  return back() + davrHtml() + `<div class="tiles">${tile('Kommentlar', L.length + ' ta', 'davrda')}${tile('Javobsiz', jav + ' ta', L.length ? pr(jav / L.length) : '')}</div>` +
-    (L.length ? L.slice(0, 100).map(o => `<div class="item"><div class="tp"><span>${dmhm(o.Sana)} · @${esc(o.Muallif)}</span><span class="${o['Javob berilgan'] === 'Ha' ? 'ok' : 'warn'}">${o['Javob berilgan'] === 'Ha' ? '✔ javob berilgan' : 'javobsiz'}</span></div><div class="t" style="font-weight:500">${esc(o.Matn)}</div>
-      <div class="m"><span class="pill">${esc(o.Mavzu || '—')}</span><span class="${o.Kayfiyat === 'Salbiy' ? 'bad' : ''}">${esc(o.Kayfiyat || '')}</span></div>${o.Havola ? `<a class="lnk" href="#" data-u="${esc(o.Havola)}">Postni ochish</a>` : ''}</div>`).join('') : '<div class="empty">Bu davrda yo\'q</div>');
-}
 function tizim() {
-  const t = D.tizim, X = rows(D.xarajat), m = {}; let jami = 0; X.forEach(o => { const v = num(o.$); jami += v; m[o.Vazifa || '—'] = (m[o.Vazifa || '—'] || 0) + v; });
+  const [ta, tb] = davr(), t = D.tizim, X = rows(D.xarajat).filter(o => !o.Sana || inD(o.Sana, ta, tb)), m = {}; let jami = 0; X.forEach(o => { const v = num(o.$); jami += v; m[o.Vazifa || '—'] = (m[o.Vazifa || '—'] || 0) + v; });
   const bel = { OK: '✅', DIQQAT: '⚠️', XATO: '⛔' };
-  return back() + `<div class="tiles">${tile('Tizim holati', (bel[t.holat] || '') + ' ' + esc(t.holat), t.vaqt ? 'tekshirildi ' + dmhm(t.vaqt) : '')}${tile('Bugungi ish vaqti', t.ish + ' / ' + t.limit, 'daqiqa' + (t.pauza ? ' · pauza' : ''), t.ish / (t.limit || 1))}${tile('AI xarajat', '$' + jami.toFixed(2), 'shu oy')}${tile('Bot odamlari', D.odamlar.length, 'ta')}</div>
+  return back() + davrHtml() + `<div class="tiles">${tile('Tizim holati', (bel[t.holat] || '') + ' ' + esc(t.holat), t.vaqt ? 'tekshirildi ' + dmhm(t.vaqt) : '')}${tile('Bugungi ish vaqti', t.ish + ' / ' + t.limit, 'daqiqa' + (t.pauza ? ' · pauza' : ''), t.ish / (t.limit || 1))}${tile('AI xarajat', '$' + jami.toFixed(2), 'davrda (shu oy ichida)')}${tile('Bot odamlari', D.odamlar.length, 'ta')}</div>
     <div class="card"><h3>Muammolar</h3>${t.muammo.length ? t.muammo.map(x => `<div class="row"><div>${bel[x.holat] || '•'}</div><div><b>${esc(x.nom)}</b><div class="muted" style="font-size:13px">${esc(x.tashxis)}${x.kim ? ' — ' + esc(x.kim) : ''}</div></div></div>`).join('') : '<div class="ok">Hammasi joyida</div>'}</div>
     <div class="card"><h3>AI xarajat · vazifa bo'yicha</h3>${Object.keys(m).sort((x, y) => m[y] - m[x]).map(k => `<div class="row"><div style="flex:1">${esc(k)}</div><b>$${m[k].toFixed(2)}</b></div>`).join('') || '<div class="muted">Yo\'q</div>'}</div>
     <div class="card"><h3>Bot odamlari</h3>${D.odamlar.map(o => `<div class="row"><div style="flex:1">${esc(o.ism)} <span class="muted">${esc(o.username || '')}</span></div><span class="pill">${esc(o.rol)}</span></div>`).join('')}</div>`;
 }
 
 // ---------- AI ----------
-const SUGG = { Ega: ["Oxirgi 7 kunda dizayner nechta dizayn qildi?", "Turi yo'q reelslarni ko'rsat", "Javobsiz kommentlar nechta?", "Nega xato bor?"], Admin: ["Javobsiz kommentlar nechta?", "Bu hafta nechta reels joylandi?"], Mobilograf: ["Bugun nechta reels qoldi?", "Eng yaxshi reelsim qaysi?"], Storismaker: ["Bugun nechta story qoldi?"], Dizayner: ["Bu oy nechta dizayn qildim?"] };
+const SUGG = { Ega: ["Oxirgi 7 kunda dizayner nechta dizayn qildi?", "Turi yo'q reelslarni ko'rsat", "Nega xato bor?"], Admin: ["Bu hafta nechta reels joylandi?"], Mobilograf: ["Bugun nechta reels qoldi?", "Eng yaxshi reelsim qaysi?"], Storismaker: ["Bugun nechta story qoldi?"], Dizayner: ["Bu oy nechta dizayn qildim?"] };
 let MSG = [];
 function ai() {
   return `<div class="msgs" id="msgs">${MSG.length ? MSG.map(m => `<div class="msg ${m[0]}">${esc(m[1])}</div>`).join('') : `<div class="msg bot">Salom${D.ism ? ', ' + esc(D.ism) : ''}! Istalgan savolni yozing — bazadan topib, hisoblab beraman. Davrni o'zingiz yozing: «3-noyabrdan 20-noyabrgacha…».\nO'zgartirish kerak bo'lgan amallar (tur belgilash, eslatma) tasdiq tugmasi bilan botda bajariladi.</div><div class="sugg">${(SUGG[D.rol] || []).map(s => `<button>${esc(s)}</button>`).join('')}</div>`}</div>
