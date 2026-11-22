@@ -2,143 +2,72 @@
 <html lang="uz">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>KONTENT</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root {
-  --bg: var(--tg-theme-bg-color, #ffffff);
-  --bg2: var(--tg-theme-secondary-bg-color, #f2f4f3);
-  --text: var(--tg-theme-text-color, #16201b);
-  --hint: var(--tg-theme-hint-color, #7d8a83);
-  --link: var(--tg-theme-link-color, #2E8B3E);
-  --accent: var(--tg-theme-button-color, #2E8B3E);
-  --accent-text: var(--tg-theme-button-text-color, #ffffff);
-  --card: var(--tg-theme-section-bg-color, var(--bg));
-  --line: color-mix(in srgb, var(--hint) 22%, transparent);
-  --ok: #2E9E4F; --warn: #D99A00; --bad: #D64545;
-}
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html, body { margin: 0; background: var(--bg2); color: var(--text); font: 15px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-body { padding-bottom: env(safe-area-inset-bottom); }
-header { padding: 14px 16px 6px; }
-header h1 { margin: 0; font-size: 20px; letter-spacing: -.2px; }
-header .sub { color: var(--hint); font-size: 13px; margin-top: 2px; }
-nav { position: sticky; top: 0; z-index: 5; background: var(--bg2); display: flex; gap: 6px; overflow-x: auto; padding: 8px 12px 10px; scrollbar-width: none; }
-nav::-webkit-scrollbar { display: none; }
-nav button { flex: none; border: 0; background: var(--card); color: var(--text); padding: 8px 13px; border-radius: 18px; font: inherit; font-size: 14px; cursor: pointer; }
-nav button.on { background: var(--accent); color: var(--accent-text); font-weight: 600; }
-main { padding: 0 12px 24px; }
-.sec { display: none; } .sec.on { display: block; }
-.card { background: var(--card); border-radius: 14px; padding: 12px 14px; margin-bottom: 10px; }
-.card h3 { margin: 0 0 8px; font-size: 13px; font-weight: 600; color: var(--hint); text-transform: uppercase; letter-spacing: .4px; }
-.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-.tile { background: var(--card); border-radius: 14px; padding: 11px 12px; }
-.tile .k { color: var(--hint); font-size: 12px; }
-.tile .v { font-size: 22px; font-weight: 700; margin-top: 2px; font-variant-numeric: tabular-nums; }
-.tile .s { font-size: 12px; color: var(--hint); margin-top: 1px; }
-.bar { height: 6px; background: var(--line); border-radius: 3px; margin-top: 6px; overflow: hidden; }
-.bar i { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
-.seg { display: flex; background: var(--card); border-radius: 10px; padding: 3px; margin-bottom: 10px; }
-.seg button { flex: 1; border: 0; background: none; color: var(--text); padding: 7px 0; border-radius: 8px; font: inherit; font-size: 14px; }
-.seg button.on { background: var(--accent); color: var(--accent-text); font-weight: 600; }
-.filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.filters label { font-size: 12px; color: var(--hint); display: block; }
-.filters input, .filters select { width: 100%; margin-top: 3px; padding: 8px 9px; border-radius: 9px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font: inherit; font-size: 14px; }
-.filters .full { grid-column: 1 / -1; }
-.chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 0 -2px 10px; padding: 0 2px; }
-.chips::-webkit-scrollbar { display: none; }
-.chips button { flex: none; border: 1px solid var(--line); background: var(--bg); color: var(--text); border-radius: 15px; padding: 5px 11px; font: inherit; font-size: 13px; }
-.chips button.on { background: var(--accent); border-color: var(--accent); color: var(--accent-text); font-weight: 600; }
-.frow { display: flex; gap: 8px; align-items: flex-end; }
-.frow > label { flex: 1; }
-.ib { flex: none !important; border: 1px solid var(--line); background: var(--bg); color: var(--text); border-radius: 9px; height: 37px; min-width: 40px; font: inherit; font-size: 16px; }
-.more { display: none; margin-top: 8px; } .more.on { display: grid; }
-.lnkbtn { background: none; border: 0; color: var(--link); font: inherit; font-size: 13px; padding: 8px 0 0; }
-.cmp { font-size: 13px; color: var(--hint); margin: -4px 2px 10px; }
-.lib { display: none; } .lib.on { display: block; }
-.lib h4 { margin: 12px 2px 6px; font-size: 14px; }
-.sum { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--hint); margin: 4px 2px 10px; }
-.sum b { color: var(--text); font-variant-numeric: tabular-nums; }
-.item { background: var(--card); border-radius: 14px; padding: 11px 13px; margin-bottom: 8px; }
-.item .top { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--hint); }
-.item .t { margin: 4px 0 6px; font-weight: 600; }
-.chip { display: inline-block; background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--link); padding: 1px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; }
-.m { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 13px; font-variant-numeric: tabular-nums; }
-.m span { color: var(--hint); }
-.m b { color: var(--text); font-weight: 600; }
-.lnk { color: var(--link); font-size: 13px; text-decoration: none; display: inline-block; margin-top: 6px; }
-.day { font-weight: 700; margin: 14px 2px 6px; font-size: 14px; }
-.row { display: flex; gap: 8px; align-items: flex-start; padding: 7px 0; border-top: 1px solid var(--line); font-size: 14px; }
-.row:first-child { border-top: 0; }
-.ok { color: var(--ok); } .warn { color: var(--warn); } .bad { color: var(--bad); }
-.muted { color: var(--hint); }
-.empty { text-align: center; color: var(--hint); padding: 28px 10px; }
-canvas { max-width: 100%; }
-/* AI chat */
-#ai.on { display: flex; flex-direction: column; min-height: calc(100vh - 150px); }
-.msgs { flex: 1; }
-.msg { max-width: 86%; padding: 9px 12px; border-radius: 16px; margin: 6px 0; white-space: pre-wrap; word-wrap: break-word; font-size: 14.5px; }
-.msg.me { margin-left: auto; background: var(--accent); color: var(--accent-text); border-bottom-right-radius: 5px; }
-.msg.bot { background: var(--card); border-bottom-left-radius: 5px; }
-.msg.bot.wait { color: var(--hint); }
-.sugg { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
-.sugg button { border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: 16px; padding: 6px 11px; font: inherit; font-size: 13px; text-align: left; }
-.ask { position: sticky; bottom: 0; display: flex; gap: 8px; padding: 8px 0 10px; background: var(--bg2); }
-.ask textarea { flex: 1; resize: none; border: 1px solid var(--line); border-radius: 18px; padding: 9px 14px; font: inherit; background: var(--card); color: var(--text); max-height: 110px; }
-.ask button { border: 0; background: var(--accent); color: var(--accent-text); border-radius: 50%; width: 42px; height: 42px; font-size: 18px; flex: none; }
-.ask button:disabled { opacity: .5; }
-#load { text-align: center; padding: 60px 20px; color: var(--hint); }
-.spin { width: 28px; height: 28px; border: 3px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: s 0.8s linear infinite; margin: 0 auto 12px; }
-@keyframes s { to { transform: rotate(360deg); } }
+:root{--y:#4FBF5E;--q:#151515;--q2:#1d1d1d;--q3:#262626;--k:#8f9a92;--r:#ff6b6b;--s:#ffcc4d;--ln:#2b2b2b}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{font-family:Inter,-apple-system,Segoe UI,Roboto,sans-serif;background:#080a08;color:#fff;font-size:14px;padding-bottom:84px;background-attachment:fixed;
+ background-image:radial-gradient(520px 320px at 100% -40px,rgba(79,191,94,.20),transparent 70%),radial-gradient(420px 300px at -10% 100%,rgba(255,255,255,.05),transparent 70%),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='44'><path d='M0 44 44 0' stroke='%234FBF5E' stroke-opacity='.07' stroke-width='1.2'/><path d='M22 17v10M17 22h10' stroke='%23ffffff' stroke-opacity='.06' stroke-width='1.4' fill='none'/></svg>")}
+.top{position:sticky;top:0;z-index:5;background:rgba(8,10,8,.92);backdrop-filter:blur(8px);padding:12px 14px 8px;display:flex;align-items:center;gap:10px}
+.lg{height:34px;border-radius:9px;background:#fff;display:flex;align-items:center;justify-content:center;color:#0a0a0a;font-weight:900;font-size:13px;letter-spacing:.06em;flex:none;padding:0 9px;border-bottom:3px solid var(--y)}
+.top b{font-size:16px}.top small{display:block;color:var(--k);font-size:11.5px}
+.top .rf{margin-left:auto;background:var(--q3);border:0;color:#fff;border-radius:10px;padding:7px 11px;font-size:13px}
+main{padding:0 12px}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0 8px}.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:7px 13px;border-radius:20px;background:var(--q3);color:#ddd;font-size:12.5px;border:0;font:inherit;font-size:12.5px}
+.chip.on{background:var(--y);color:var(--q);font-weight:700}
+.dr{display:none;gap:8px;margin:0 0 8px}.dr.on{display:flex}.dr label{flex:1;font-size:11px;color:var(--k)}
+input,select{width:100%;background:#111;border:1px solid #333;border-radius:12px;color:#fff;padding:10px 12px;font-size:14px;font-family:inherit;margin:4px 0;color-scheme:dark}
+.card{background:rgba(22,26,22,.88);border:1px solid #263026;border-radius:16px;padding:12px 14px;margin:0 0 10px}
+.card h3{margin:0 0 8px;font-size:12px;font-weight:700;color:var(--k);text-transform:uppercase;letter-spacing:.4px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.tile{background:rgba(22,26,22,.88);border:1px solid #263026;border-radius:16px;padding:11px 12px}.tile .k{color:var(--k);font-size:11.5px}.tile .v{font-size:22px;font-weight:800;margin-top:2px;font-variant-numeric:tabular-nums}.tile .s{font-size:11.5px;color:var(--k);margin-top:1px}
+.bar{height:7px;background:#2c2c2c;border-radius:4px;margin-top:7px;overflow:hidden}.bar i{display:block;height:100%;background:var(--y);border-radius:4px}.bar i.w{background:var(--s)}.bar i.b{background:var(--r)}
+.item{background:rgba(22,26,22,.88);border:1px solid #263026;border-radius:16px;padding:11px 13px;margin-bottom:8px}
+.item .tp{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--k)}.item .t{margin:4px 0 6px;font-weight:600}
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:9px;background:rgba(79,191,94,.16);color:var(--y)}.pill.w{background:rgba(255,204,77,.16);color:var(--s)}.pill.b{background:rgba(255,107,107,.16);color:var(--r)}
+.m{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;font-variant-numeric:tabular-nums}.m span{color:var(--k)}.m b{color:#fff;font-weight:600}
+.lnk{color:var(--y);font-size:13px;text-decoration:none;display:inline-block;margin-top:6px}
+.ok{color:var(--y)}.warn{color:var(--s)}.bad{color:var(--r)}.muted{color:var(--k)}
+.empty{text-align:center;color:var(--k);padding:28px 10px}
+.sum{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--k);margin:2px 2px 10px}.sum b{color:#fff}
+.row{display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--ln);font-size:14px}.row:first-child{border-top:0}
+.hm{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px}.hm i{aspect-ratio:1;border-radius:5px;background:#2a2a2a;display:block}.hm i.g{background:var(--y)}.hm i.y{background:var(--s)}.hm i.r{background:var(--r)}
+.cols{display:flex;align-items:flex-end;gap:3px;height:96px}.cols i{flex:1;background:var(--y);border-radius:3px 3px 0 0;min-height:2px;opacity:.9}
+.hb{display:flex;gap:6px;align-items:center;font-size:12.5px;margin:5px 0}.hb span{width:110px;flex:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#ddd}.hb div{flex:1;height:8px;background:#2c2c2c;border-radius:4px;overflow:hidden}.hb div i{display:block;height:100%;background:var(--y)}.hb b{width:54px;text-align:right;font-variant-numeric:tabular-nums;flex:none}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:12px;background:var(--y);color:var(--q);font-weight:800;font-size:14px;margin:8px 0}.btn.g{background:var(--q3);color:#fff;font-weight:600}
+.msgs{padding-bottom:6px}.msg{max-width:88%;padding:9px 12px;border-radius:16px;margin:6px 0;white-space:pre-wrap;word-wrap:break-word;font-size:14.5px}
+.msg.me{margin-left:auto;background:var(--y);color:var(--q);border-bottom-right-radius:5px;font-weight:600}.msg.bot{background:var(--q2);border:1px solid var(--ln);border-bottom-left-radius:5px}.msg.wait{color:var(--k)}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.sugg button{border:1px solid var(--ln);background:var(--q2);color:#ddd;border-radius:16px;padding:7px 12px;font:inherit;font-size:13px;text-align:left}
+.ask{position:sticky;bottom:78px;display:flex;gap:8px;padding:8px 0;background:linear-gradient(transparent,#0d0d0d 30%)}
+.ask textarea{flex:1;resize:none;border:1px solid #333;border-radius:18px;padding:10px 14px;font:inherit;background:#111;color:#fff;max-height:110px}
+.ask button{border:0;background:var(--y);color:var(--q);border-radius:50%;width:44px;height:44px;font-size:18px;font-weight:800;flex:none}.ask button:disabled{opacity:.5}
+.tab{position:fixed;left:0;right:0;bottom:0;display:flex;background:rgba(10,10,10,.97);border-top:1px solid #222;padding:6px 2px calc(10px + env(safe-area-inset-bottom));z-index:9}
+.tab button{flex:1;background:none;border:0;color:#8a8a8a;font-size:10.5px;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:inherit}.tab button em{font-style:normal;font-size:19px}.tab button.on{color:var(--y);font-weight:700}
+.tab button.ai em{background:var(--y);border-radius:16px;padding:5px 12px;margin-top:-16px;box-shadow:0 4px 14px rgba(79,191,94,.35)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:flex-end;z-index:20}.modal>div{background:#181818;width:100%;border-radius:22px 22px 0 0;padding:16px;max-height:88vh;overflow:auto}
+.yuk{text-align:center;color:var(--k);padding:60px 20px}.err{background:#3a1515;border:1px solid #702828;color:#ffb3b3;border-radius:12px;padding:10px;margin:8px 0}
+#yan{position:fixed;top:6px;right:8px;z-index:50;font-size:11px;padding:2px 8px;border-radius:10px;background:#1b7a43;color:#fff;opacity:.92;pointer-events:none;display:none}
 </style>
 </head>
 <body>
-<header><h1>📊 KONTENT</h1><div class="sub" id="sub">ALLMAX FIX PRICE · Instagram</div></header>
-<nav id="nav"></nav>
-<main>
-  <div id="load"><div class="spin"></div>Ma'lumot yuklanmoqda…</div>
-
-  <section class="sec" id="asosiy"></section>
-
-  <section class="sec" id="reels">
-    <div id="r_f"></div>
-    <div class="sum" id="r_sum"></div><div class="cmp" id="r_cmp"></div>
-    <div class="card"><h3>Tur bo'yicha o'rtacha ko'rish</h3><canvas id="r_chart" height="190"></canvas></div>
-    <div id="r_list"></div>
-  </section>
-
-  <section class="sec" id="story">
-    <div id="s_f"></div>
-    <div class="sum" id="s_sum"></div><div class="cmp" id="s_cmp"></div>
-    <div id="s_list"></div>
-  </section>
-
-  <section class="sec" id="reja"></section>
-  <section class="sec" id="obunachi"></section>
-  <section class="sec" id="komment"></section>
-  <section class="sec" id="push"></section>
-  <section class="sec" id="tizim"></section>
-
-  <section class="sec" id="ai">
-    <div class="msgs" id="msgs"></div>
-    
-    <div class="ask"><textarea id="q" rows="1" placeholder="Istalgan savol…"></textarea><button id="send" aria-label="Yuborish">➤</button></div>
-  </section>
-</main>
+<div id="yan">🔄 yangilanmoqda…</div>
+<div class="top"><div class="lg">ALLMAX</div><div><b>KONTENT</b><small id="sub">yuklanmoqda…</small></div><button class="rf" id="rf">↻</button></div>
+<main id="ek"><div class="yuk">⏳ yuklanmoqda…</div></main>
+<nav class="tab" id="tab"></nav>
 
 <script>
 const tg = window.Telegram && Telegram.WebApp;
-if (tg) { tg.ready(); tg.expand(); }
-const API = new URLSearchParams(location.search).get('api');
-const TZ = 'Asia/Tashkent';
-let D = null;                       // serverdan kelgan ma'lumot
-const charts = {};
-
-// ---------- yordamchilar ----------
-const $ = id => document.getElementById(id);
+if (tg) { tg.ready(); tg.expand(); try { tg.setHeaderColor('#080a08'); tg.setBackgroundColor('#080a08'); } catch (e) {} }
+const API = new URLSearchParams(location.search).get('api') || (() => { try { return localStorage.getItem('kb_api') || ''; } catch (e) { return ''; } })();
+try { if (new URLSearchParams(location.search).get('api')) localStorage.setItem('kb_api', API); } catch (e) {}
+const TZ = 'Asia/Tashkent', $ = id => document.getElementById(id);
+let D = null, BET = 'asosiy', SORT = {};
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const num = x => typeof x === 'number' && isFinite(x) ? x : 0;
 const n0 = x => (typeof x === 'number' && isFinite(x)) ? Math.round(x).toLocaleString('ru-RU') : '—';
 const pr = x => (typeof x === 'number' && isFinite(x)) ? Math.round(x * 100) + '%' : '—';
 const sgn = x => (typeof x === 'number' && isFinite(x)) ? (x > 0 ? '+' : '') + n0(x) : '—';
@@ -146,297 +75,231 @@ const kunKey = ms => new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'num
 const dm = ms => new Intl.DateTimeFormat('ru-RU', { timeZone: TZ, day: '2-digit', month: '2-digit' }).format(new Date(ms));
 const dmhm = ms => new Intl.DateTimeFormat('ru-RU', { timeZone: TZ, day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(ms)).replace(',', '');
 const KUN = ['Yakshanba', 'Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba'];
-const kunNomi = ms => KUN[new Date(new Date(ms).toLocaleString('en-US', { timeZone: TZ })).getDay()];
-// {ust, q} → obyektlar ro'yxati
+const kunNomi = k => KUN[new Date(k + 'T12:00:00Z').getUTCDay()];
 const rows = t => t && t.ust ? t.q.map(r => { const o = {}; t.ust.forEach((u, i) => o[u] = r[i]); return o; }) : [];
-const open = url => { if (!url) return; if (tg && tg.openLink) tg.openLink(url); else window.open(url, '_blank'); };
-const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-const num = x => typeof x === 'number' ? x : 0;
+const qosh = (k, n) => new Date(Date.parse(k + 'T00:00:00Z') + n * 864e5).toISOString().slice(0, 10);
+const open = u => { if (!u) return; if (tg && tg.openLink) tg.openLink(u); else window.open(u, '_blank'); };
+const tile = (k, v, s, f) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div>${s ? `<div class="s">${s}</div>` : ''}${typeof f === 'number' && isFinite(f) ? `<div class="bar"><i class="${f < .6 ? 'b' : f < .9 ? 'w' : ''}" style="width:${Math.min(100, Math.round(f * 100))}%"></i></div>` : ''}</div>`;
+const sana2 = k => k.slice(8) + '.' + k.slice(5, 7);
+const lsGet = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
 
+// ---------- DAVR (hamma bo'limlar uchun bitta) ----------
+const DAVR = [['bugun', 'Bugun'], ['kecha', 'Kecha'], ['7', '7 kun'], ['30', '30 kun'], ['oy', 'Shu oy'], ['ooy', "O'tgan oy"], ['oz', '📅 Sana']];
+let dv = (() => { try { return JSON.parse(lsGet('kb_davr') || 'null'); } catch (e) { return null; } })() || { d: '7', dan: '', gacha: '' };
+function davr() {
+  const t = kunKey(Date.now()), oy1 = t.slice(0, 8) + '01', ooy = qosh(oy1, -1);
+  const m = { bugun: [t, t], kecha: [qosh(t, -1), qosh(t, -1)], '7': [qosh(t, -6), t], '30': [qosh(t, -29), t], oy: [oy1, t], ooy: [ooy.slice(0, 8) + '01', ooy], oz: [dv.dan || qosh(t, -29), dv.gacha || t] };
+  let [a, b] = m[dv.d] || m['7']; if (a > b) [a, b] = [b, a]; return [a, b];
+}
+const kunlar = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 864e5) + 1;
+const inD = (ms, a, b) => { const k = kunKey(ms); return k >= a && k <= b; };
+function davrHtml() {
+  const [a, b] = davr();
+  return `<div class="chips" id="dch">${DAVR.map(d => `<button class="chip ${dv.d === d[0] ? 'on' : ''}" data-d="${d[0]}">${d[1]}</button>`).join('')}</div>
+  <div class="dr ${dv.d === 'oz' ? 'on' : ''}" id="ddr"><label>Dan<input type="date" id="dan" value="${a}"></label><label>Gacha<input type="date" id="gacha" value="${b}"></label></div>
+  <div class="muted" style="font-size:12px;margin:0 2px 8px">${sana2(a)} – ${sana2(b)} · ${kunlar(a, b)} kun</div>`;
+}
+function davrUlash() {
+  $('dch').onclick = e => { const x = e.target.closest('button'); if (!x) return; dv.d = x.dataset.d; lsSet('kb_davr', JSON.stringify(dv)); chiz(); };
+  const f = () => { dv.dan = $('dan').value; dv.gacha = $('gacha').value; lsSet('kb_davr', JSON.stringify(dv)); chiz(true); };
+  if ($('dan')) { $('dan').onchange = f; $('gacha').onchange = f; }
+}
+
+// ---------- SERVER (oxirgi holat darhol, yangisi orqada) ----------
 async function api(body) {
   const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ ilova: 1, initData: tg ? tg.initData : '' }, body)) });
   const t = await r.text();
-  try { return JSON.parse(t); }
-  catch (e) { throw new Error('HTTP ' + r.status + ' · ' + (/<html|<!doctype/i.test(t) ? "server JSON o'rniga sahifa qaytardi — Apps Script'da yangi versiya chiqarilmagan yoki 18 ilova fayli yo'q" : t.slice(0, 120))); }
+  try { return JSON.parse(t); } catch (e) { throw new Error('HTTP ' + r.status + ' · ' + (/<html|<!doctype/i.test(t) ? "server JSON o'rniga sahifa qaytardi (Apps Script'da yangi versiya kerak)" : t.slice(0, 120))); }
 }
-
-// ---------- boshlash ----------
-async function start() {
+function prep(d) { d.R = rows(d.reels); d.S = rows(d.story); d.J = rows(d.reja); d.K = rows(d.kunlik).filter(o => o.Sana).sort((a, b) => a.Sana - b.Sana); d.Z = rows(d.dizayn); return d; }
+async function yangila(jim, majbur) {
   if (!API) return fail("Ilova manzili to'liq emas. Botdagi «📊 KONTENT» tugmasi orqali oching.");
-  if (!tg || !tg.initData) return fail("Bu ilova faqat Telegram ichida ishlaydi — botdagi «📊 KONTENT» tugmasini bosing.");
-  try { D = await api({ amal: 'hammasi' }); } catch (e) { return fail("Server bilan aloqa bo'lmadi.\n\nSabab: " + e.message + "\n\nShu ekranni skrinshot qilib yuboring."); }
-  if (D.xato) return fail(D.xato);
-  $('load').style.display = 'none';
-  $('sub').textContent = (D.ism || '') + ' · ' + D.rol + ' · ' + dmhm(D.vaqt) + ' holati';
-  D.R = rows(D.reels); D.S = rows(D.story); D.J = rows(D.reja);
-  buildNav();
+  if (!tg || !tg.initData) return fail("Bu ilova faqat Telegram ichida ishlaydi — botdagi tugmani bosing.");
+  $('yan').style.display = 'block';
+  try {
+    const j = await api({ amal: 'hammasi', yangi: majbur ? 1 : 0 });
+    if (j.xato) { $('yan').style.display = 'none'; return jim && D ? 0 : fail(j.xato); }
+    const eski = D && D.vaqt;
+    D = prep(j); lsSet('kb_D', JSON.stringify(j));
+    $('sub').textContent = (D.ism || '') + ' · ' + D.rol + ' · ' + dmhm(D.vaqt);
+    if (!eski || eski !== D.vaqt) { nav(); chiz(); }
+  } catch (e) { if (!D) fail("Server bilan aloqa bo'lmadi.\n" + e.message); }
+  $('yan').style.display = 'none';
 }
-function fail(t) { $('load').innerHTML = '⚠️<br><br>' + esc(t).replace(/\n/g, '<br>') + '<br><br><span style="font-size:12px">API: ' + esc(String(API || '—').slice(0, 60)) + '…</span>'; }
+function fail(t) { $('ek').innerHTML = '<div class="yuk">⚠️<br><br>' + esc(t).replace(/\n/g, '<br>') + '</div>'; }
 
-const BOLIM = [
-  ['asosiy', '🏠 Asosiy', d => true],
-  ['ai', '🤖 AI chat', d => true],
-  ['reels', '🎬 Reels', d => !!d.reels],
-  ['story', '📱 Story', d => !!d.story],
-  ['reja', '📋 Reja', d => true],
-  ['obunachi', '👥 Obunachilar', d => !!d.obunachi],
-  ['komment', '💬 Kommentlar', d => !!d.komment],
-  ['push', '📣 Push', d => !!d.push],
-  ['tizim', '⚙️ Tizim', d => !!d.tizim]
-];
-const tayyor = {};
-function buildNav() {
-  $('nav').innerHTML = BOLIM.filter(b => b[2](D)).map(b => `<button data-s="${b[0]}">${b[1]}</button>`).join('');
-  $('nav').onclick = e => { const b = e.target.closest('button'); if (b) show(b.dataset.s); };
-  show('asosiy');
+// ---------- NAVIGATSIYA ----------
+const T = d => { const E = d.rol === 'Ega', A = d.rol === 'Admin', M = d.rol === 'Mobilograf', S = d.rol === 'Storismaker', Z = d.rol === 'Dizayner';
+  return [['asosiy', '🏠', 'Asosiy', !Z], ['reels', '🎬', 'Reels', !!d.reels], ['story', '📱', 'Story', !!d.story], ['dizayn', '🎨', 'Dizayn', !!d.dizayn], ['ai', '🤖', 'AI', true], ['koproq', '☰', "Ko'proq", true]]
+    .filter(x => x[3]); };
+function nav() {
+  const list = T(D); if (!list.some(x => x[0] === BET)) BET = list[0][0];
+  $('tab').innerHTML = list.map(x => `<button data-t="${x[0]}" class="${x[0] === 'ai' ? 'ai ' : ''}${x[0] === BET ? 'on' : ''}"><em>${x[1]}</em>${x[2]}</button>`).join('');
 }
-function show(id) {
-  document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.s === id));
-  document.querySelectorAll('.sec').forEach(s => s.classList.toggle('on', s.id === id));
-  if (!tayyor[id]) { tayyor[id] = 1; ({ asosiy, reels: reelsInit, story: storyInit, reja, obunachi, komment, push, tizim, ai: aiInit })[id](); }
-  if (tg && tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
-  window.scrollTo(0, 0);
+$('tab').onclick = e => { const b = e.target.closest('button'); if (!b) return; BET = b.dataset.t; nav(); chiz(); window.scrollTo(0, 0); if (tg && tg.HapticFeedback) tg.HapticFeedback.selectionChanged(); };
+$('rf').onclick = () => yangila(true, true);
+const BOL = { asosiy, reels, story, dizayn, ai, koproq, reja, obunachi, komment, tizim };
+function chiz(saqla) {
+  if (!D) return; const y = window.scrollY;
+  try { $('ek').innerHTML = BOL[BET](); } catch (e) { $('ek').innerHTML = '<div class="err">❌ ' + esc(e.message) + '</div>'; }
+  if (BET !== 'ai') { if ($('dch')) davrUlash(); } else aiUlash();
+  if (BET === 'reels' || BET === 'story') filtrUlash();
+  if (saqla || BET !== 'ai') window.scrollTo(0, saqla ? y : 0);
+  if (BET === 'koproq') koproqUlash();
 }
-
-// ---------- grafik ----------
-function chart(id, cfg) {
-  if (!window.Chart) { const k = $(id).closest('.card'); if (k) k.style.display = 'none'; return; }   // grafik kutubxonasi yuklanmasa — bo'sh joy qolmasin
-  if (charts[id]) charts[id].destroy();
-  const t = css('--text') || '#16201b', h = css('--hint') || '#7d8a83';
-  Chart.defaults.color = h; Chart.defaults.font.size = 11;
-  cfg.options = Object.assign({ responsive: true, maintainAspectRatio: false, plugins: { legend: { display: cfg.data.datasets.length > 1, labels: { boxWidth: 10, color: t } } },
-    scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(127,127,127,.15)' }, ticks: { callback: v => v >= 1000 ? Math.round(v / 1000) + 'k' : v } } } }, cfg.options || {});
-  const c = $(id); c.parentElement.style.height = (c.getAttribute('height') || 180) + 'px'; c.parentElement.style.position = 'relative';
-  charts[id] = new Chart(c, cfg);
-}
-const RANG = () => css('--accent') || '#2E8B3E';
 
 // ---------- ASOSIY ----------
+function bk() {
+  const t = kunKey(Date.now()), k = qosh(t, -1), say = (L, d) => L.filter(o => kunKey(o.Sana) === d).length;
+  const kr = d => D.K.find(o => kunKey(o.Sana) === d) || {};
+  const nr = d => d === t ? D.norma.reels : (typeof kr(d)['Reels reja'] === 'number' ? kr(d)['Reels reja'] : null), ns = d => d === t ? D.norma.story : (typeof kr(d)['Story reja'] === 'number' ? kr(d)['Story reja'] : null);
+  const z = d => D.Z.filter(o => kunKey(o.Sana) === d).reduce((x, o) => x + num(o['Dizaynlar soni']), 0);
+  const blok = (nom, d) => { const r = D.R ? say(D.R, d) : null, s = D.S ? say(D.S, d) : null, a = nr(d), b = ns(d);
+    const q = (e, v, n) => v == null ? '' : `<div style="flex:1;min-width:0"><div class="muted" style="font-size:11px">${e}</div><div style="font-size:22px;font-weight:800">${v}${n ? `<span class="muted" style="font-size:13px;font-weight:600"> / ${n}</span>` : ''}</div></div>`;
+    return `<div style="flex:1;min-width:0;background:rgba(22,26,22,.88);border:1px solid #263026;border-radius:16px;padding:10px 12px"><div style="font-size:12px;font-weight:700;color:var(--y);margin-bottom:6px">${nom} · ${sana2(d)}</div><div style="display:flex;gap:8px">${q('Reels', r, a)}${q('Story', s, b)}${D.dizayn ? q('Dizayn', z(d), 0) : ''}</div></div>`; };
+  return `<div style="display:flex;gap:8px;margin-bottom:10px">${blok('Bugun', t)}${blok('Kecha', k)}</div>`;
+}
 function asosiy() {
-  const el = $('asosiy');
-  if (D.kunlik) {
-    el.innerHTML = `<div class="seg" id="davr"><button data-d="kunlik" class="on">Bugun</button><button data-d="haftalik">Hafta</button><button data-d="oylik">Oy</button></div>
-      <div id="kpi"></div>
-      <div class="card"><h3>Reels ko'rishlari · 30 kun</h3><div><canvas id="c_kor" height="180"></canvas></div></div>
-      <div class="card"><h3>Reja bajarilishi · 30 kun</h3><div><canvas id="c_reja" height="170"></canvas></div></div>
-      ${D.ai ? `<div class="card"><h3>AI tahlil · ${esc(D.ai.hafta || '')}</h3><div>${esc(D.ai.tahlil || '')}</div>
-        ${(D.ai.goyalar || []).length ? `<h3 style="margin-top:12px">5 ta g'oya</h3>` + D.ai.goyalar.map((g, i) => `<div class="row"><b>${i + 1}.</b><div><span class="chip">${esc(g.tur)}</span> ${esc(g.goya)}</div></div>`).join('') : ''}</div>` : ''}`;
-    $('davr').onclick = e => { const b = e.target.closest('button'); if (!b) return; $('davr').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); kpi(b.dataset.d); };
-    kpi('kunlik');
-    const K = rows(D.kunlik).filter(o => o.Sana).sort((a, b) => a.Sana - b.Sana).slice(-30);
-    chart('c_kor', { type: 'bar', data: { labels: K.map(o => dm(o.Sana)), datasets: [{ label: "Reels ko'rishlari", data: K.map(o => num(o["Reels ko'rishlari"])), backgroundColor: RANG(), borderRadius: 3 }] } });
-    chart('c_reja', { type: 'line', data: { labels: K.map(o => dm(o.Sana)), datasets: [
-      { label: 'Reels %', data: K.map(o => typeof o['Reels %'] === 'number' ? Math.round(o['Reels %'] * 100) : null), borderColor: RANG(), backgroundColor: RANG(), tension: .3, pointRadius: 0 },
-      { label: 'Story %', data: K.map(o => typeof o['Story %'] === 'number' ? Math.round(o['Story %'] * 100) : null), borderColor: '#E0A100', backgroundColor: '#E0A100', tension: .3, pointRadius: 0 }] },
-      options: { scales: { y: { suggestedMin: 0, suggestedMax: 120, ticks: { callback: v => v + '%' } }, x: { grid: { display: false } } } } });
-  } else {
-    // Mobilograf / Storismaker: o'z kontenti
-    const reels = !!D.reels, L = reels ? D.R : D.S, bugun = kunKey(Date.now());
-    const t7 = Date.now() - 7 * 864e5, b = L.filter(o => kunKey(o.Sana) === bugun), h = L.filter(o => o.Sana > t7);
-    const norma = reels ? D.norma.reels : D.norma.story, sum = a => a.reduce((s, o) => s + num(o["Ko'rishlar"]), 0);
-    el.innerHTML = `<div class="tiles">
-      ${tile('Bugun joylandi', b.length + ' / ' + norma, pr(b.length / (norma || 1)) + ' reja', b.length / (norma || 1))}
-      ${tile('7 kunda', h.length + ' ta', 'reja: ' + norma * 7 + ' ta', h.length / ((norma || 1) * 7))}
-      ${tile("7 kun ko'rish", n0(sum(h)), "o'rtacha " + n0(h.length ? sum(h) / h.length : 0))}
-      ${tile('Eng yaxshisi', n0(Math.max(0, ...h.map(o => num(o["Ko'rishlar"])))), "ko'rish (7 kun)")}</div>
-      <div class="card"><h3>Kunlik ko'rishlar · 14 kun</h3><div><canvas id="c_own" height="180"></canvas></div></div>`;
-    const kun = {}; L.filter(o => o.Sana > Date.now() - 14 * 864e5).forEach(o => { const k = kunKey(o.Sana); kun[k] = (kun[k] || 0) + num(o["Ko'rishlar"]); });
-    const ks = Object.keys(kun).sort();
-    chart('c_own', { type: 'bar', data: { labels: ks.map(k => k.slice(8) + '.' + k.slice(5, 7)), datasets: [{ label: "Ko'rish", data: ks.map(k => kun[k]), backgroundColor: RANG(), borderRadius: 3 }] } });
+  const [a, b] = davr();
+  if (D.K.length && (D.rol === 'Ega' || D.rol === 'Admin')) {
+    const L = D.K.filter(o => inD(o.Sana, a, b)), s = u => L.reduce((x, o) => x + num(o[u]), 0), son = L.length || 1;
+    const ok = ((r, p) => { const q = L.filter(o => typeof o[r] === 'number'); return q.length ? q.reduce((x, o) => x + o[r], 0) / q.length : null; });
+    const Z = D.Z.filter(o => inD(o.Sana, a, b)), zj = Z.reduce((x, o) => x + num(o['Dizaynlar soni']), 0);
+    const oxirgi = [...D.K].reverse().find(o => typeof o['Jami obunachi'] === 'number' && o.Sana <= Date.parse(b + 'T23:59:59Z')) || {};
+    const heat = L.map(o => { const r = Math.min(num(o['Reels %']), num(o['Story %']) || num(o['Reels %'])); const p = Math.min(typeof o['Reels %'] === 'number' ? o['Reels %'] : 1, typeof o['Story %'] === 'number' ? o['Story %'] : 1); return `<i class="${p >= 1 ? 'g' : p >= .7 ? 'y' : 'r'}" title="${dm(o.Sana)}"></i>`; }).join('');
+    const kor = L.map(o => num(o["Reels ko'rishlari"])), mx = Math.max(1, ...kor);
+    const kk = ((arr) => arr.reduce((m, o) => (m[o['Kontent turi'] || '—'] = (m[o['Kontent turi'] || '—'] || 0) + 1, m), {}))(D.R.filter(o => inD(o.Sana, a, b) && !String(o['Kontent turi'] || '').trim()));
+    const yoqR = D.R.filter(o => inD(o.Sana, a, b) && !String(o['Kontent turi'] || '').trim()).length, yoqS = D.S.filter(o => inD(o.Sana, a, b) && !String(o['Story turi'] || '').trim()).length;
+    const jav = rows(D.komment).filter(o => o['Javob berilgan'] === "Yo'q").length;
+    return bk() + davrHtml() + `<div class="tiles">
+      ${tile('Reels', n0(s('Reels')) + ' / ' + n0(s('Reels reja')), pr(s('Reels') / (s('Reels reja') || 1)) + ' reja', s('Reels') / (s('Reels reja') || 1))}
+      ${tile('Story', n0(s('Story')) + ' / ' + n0(s('Story reja')), pr(s('Story') / (s('Story reja') || 1)) + ' reja', s('Story') / (s('Story reja') || 1))}
+      ${tile("Reels ko'rishlari", n0(s("Reels ko'rishlari")), "kuniga o'rtacha " + n0(s("Reels ko'rishlari") / son))}
+      ${tile("Story ko'rishlari", n0(s("Story ko'rishlari")), "kuniga o'rtacha " + n0(s("Story ko'rishlari") / son))}
+      ${tile('Dizayn', n0(zj) + ' ta', Z.length ? 'kuniga ' + (zj / son).toFixed(1) : "ma'lumot yo'q")}
+      ${tile('Instagram', n0(oxirgi['Jami obunachi']), "davrda " + sgn(s("O'sish")))}</div>
+      <div class="card"><h3>Kunlar xaritasi</h3><div class="hm">${heat || '—'}</div><div class="muted" style="font-size:11.5px;margin-top:6px">yashil — norma bajarilgan · sariq — 70% dan yuqori · qizil — kam</div></div>
+      <div class="card"><h3>Reels ko'rishlari · kunlar</h3><div class="cols">${kor.map((v, i) => `<i style="height:${Math.round(v / mx * 100)}%" title="${dm(L[i].Sana)} · ${n0(v)}"></i>`).join('')}</div></div>
+      <div class="card"><h3>Diqqat talab qiladi</h3>
+        <div class="row"><div style="flex:1">Turi aniq emas · reels</div><b class="${yoqR ? 'warn' : 'ok'}">${yoqR}</b></div>
+        <div class="row"><div style="flex:1">Turi bo'sh · story</div><b class="${yoqS ? 'warn' : 'ok'}">${yoqS}</b></div>
+        <div class="row"><div style="flex:1">Javobsiz kommentlar (30 kun)</div><b class="${jav ? 'warn' : 'ok'}">${jav}</b></div></div>
+      ${D.ai ? `<div class="card"><h3>AI tahlil · ${esc(D.ai.hafta || '')}</h3><div>${esc(D.ai.tahlil || '')}</div>${(D.ai.goyalar || []).length ? `<h3 style="margin-top:12px">5 ta g'oya</h3>` + D.ai.goyalar.map((g, i) => `<div class="row"><b>${i + 1}.</b><div><span class="pill">${esc(g.tur)}</span> ${esc(g.goya)}</div></div>`).join('') : ''}</div>` : ''}`;
   }
-}
-function tile(k, v, s, foiz) {
-  return `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div>${s ? `<div class="s">${s}</div>` : ''}${typeof foiz === 'number' && isFinite(foiz) ? `<div class="bar"><i style="width:${Math.min(100, Math.round(foiz * 100))}%;${foiz < .8 ? 'background:var(--warn)' : ''}"></i></div>` : ''}</div>`;
-}
-function kpi(nom) {
-  const R = rows(D[nom]).filter(o => o.Sana).sort((a, b) => b.Sana - a.Sana), o = R[0] || {}, p = R[1] || {};
-  const davr = nom === 'kunlik' ? (o.Sana ? dm(o.Sana) + ' · ' + kunNomi(o.Sana) : '') : (o.Hafta || o.Oy || '');
-  const farq = (u) => typeof o[u] === 'number' && typeof p[u] === 'number' && p[u] ? ((o[u] - p[u]) / p[u] >= 0 ? '▲ ' : '▼ ') + Math.abs(Math.round((o[u] - p[u]) / p[u] * 100)) + '% oldingiga' : '';
-  let h = `<div class="muted" style="margin:0 2px 8px;font-size:13px">${esc(davr)}${o['Reja holati'] ? ' · ' + esc(o['Reja holati']) : ''}</div><div class="tiles">
-    ${tile('Reels', n0(o.Reels) + ' / ' + n0(o['Reels reja']), pr(o['Reels %']) + ' reja', o['Reels %'])}
-    ${tile('Story', n0(o.Story) + ' / ' + n0(o['Story reja']), pr(o['Story %']) + ' reja', o['Story %'])}
-    ${tile("Reels ko'rishlari", n0(o["Reels ko'rishlari"]), farq("Reels ko'rishlari"))}
-    ${tile("Story ko'rishlari", n0(o["Story ko'rishlari"]), farq("Story ko'rishlari"))}
-    ${tile('Obunachi', n0(o['Jami obunachi']), "o'sish " + sgn(o["O'sish"]))}
-    ${tile('Akkaunt qamrovi', n0(o['Akkaunt qamrovi']), farq('Akkaunt qamrovi'))}</div>`;
-  if (o['Prognoz: reels'] != null) h += `<div class="card"><h3>Oy oxiri prognozi</h3><div class="m"><span>Reels <b>${n0(o['Prognoz: reels'])}</b></span><span>Story <b>${n0(o['Prognoz: story'])}</b></span><span>Obunachi <b>${n0(o['Prognoz: obunachi'])}</b></span></div></div>`;
-  $('kpi').innerHTML = h;
+  const reels = !!D.reels, L = (reels ? D.R : D.S).filter(o => inD(o.Sana, a, b)), norma = (reels ? D.norma.reels : D.norma.story) * kunlar(a, b), sum = L.reduce((x, o) => x + num(o["Ko'rishlar"]), 0);
+  const kun = {}; L.forEach(o => { const k = kunKey(o.Sana); kun[k] = (kun[k] || 0) + num(o["Ko'rishlar"]); }); const ks = Object.keys(kun).sort(), mx = Math.max(1, ...ks.map(k => kun[k]));
+  return bk() + davrHtml() + `<div class="tiles">${tile('Joylandi', L.length + ' / ' + norma, pr(L.length / (norma || 1)) + ' reja', L.length / (norma || 1))}${tile("Ko'rishlar", n0(sum), "o'rtacha " + n0(L.length ? sum / L.length : 0))}
+    ${tile('Eng yaxshisi', n0(Math.max(0, ...L.map(o => num(o["Ko'rishlar"])))), "ko'rish")}${tile('Kunlar', ks.length + ' ta', 'joylangan kun')}</div>
+    <div class="card"><h3>Kunlik ko'rishlar</h3><div class="cols">${ks.map(k => `<i style="height:${Math.round(kun[k] / mx * 100)}%" title="${sana2(k)}"></i>`).join('')}</div></div>`;
 }
 
 // ---------- REELS / STORY ----------
-// ---------- FILTR: tayyor davrlar + o'z sanangiz + qo'shimcha filtrlar ----------
-const DAVR = [['bugun', 'Bugun'], ['kecha', 'Kecha'], ['hafta', 'Shu hafta'], ['ohafta', "O'tgan hafta"], ['7', '7 kun'], ['30', '30 kun'], ['oy', 'Shu oy'], ['ooy', "O'tgan oy"], ['90', '3 oy'], ['hammasi', 'Hammasi'], ['oz', '✏️ Sana']];
-const F = {};
-const qoshKun = (k, n) => new Date(Date.parse(k + 'T00:00:00Z') + n * 864e5).toISOString().slice(0, 10);
-const hk = k => (new Date(k + 'T00:00:00Z').getUTCDay() + 6) % 7;                         // 0 = dushanba
-const soat = ms => Number(new Intl.DateTimeFormat('en-GB', { timeZone: TZ, hour: '2-digit', hourCycle: 'h23' }).format(new Date(ms)));
-function davrSana(p) {
-  const t = kunKey(Date.now()), d = F[p].davr, du = qoshKun(t, -hk(t)), oy1 = t.slice(0, 8) + '01', ooy1 = qoshKun(oy1, -1).slice(0, 8) + '01';
-  return ({ bugun: [t, t], kecha: [qoshKun(t, -1), qoshKun(t, -1)], hafta: [du, t], ohafta: [qoshKun(du, -7), qoshKun(du, -1)], '7': [qoshKun(t, -6), t], '30': [qoshKun(t, -29), t],
-    oy: [oy1, t], ooy: [ooy1, qoshKun(oy1, -1)], '90': [qoshKun(t, -89), t], hammasi: ['', ''], oz: [$(p + '_dan').value, $(p + '_gacha').value] })[d];
+const SR = { reels: [["Ko'rishlar", "Ko'rish"], ['Sana', 'Sana'], ['Saqlash', 'Saqlash'], ['Ulashish', 'Ulashish'], ['Layk', 'Layk'], ['Hook (1–5)', 'Hook']], story: [['Sana', 'Sana'], ["Ko'rishlar", "Ko'rish"], ['Javoblar', 'Javob'], ["Profilga o'tish", "Profilga o'tish"], ['Direct', 'Direct'], ['Dostavka', 'Dostavka']] };
+function reels() { return lista('reels'); }
+function story() { return lista('story'); }
+function lista(p) {
+  const R = p === 'reels', L0 = R ? D.R : D.S, turU = R ? 'Kontent turi' : 'Story turi', [a, b] = davr(), st = SORT[p] || { u: SR[p][0][0], d: -1, t: '', q: '' };
+  const turlar = [...new Set(L0.map(o => o[turU]).filter(Boolean))].sort();
+  const L = L0.filter(o => inD(o.Sana, a, b) && (!st.t || o[turU] === st.t) && (!st.q || String(o.Mavzu || '').toLowerCase().includes(st.q.toLowerCase()))).sort((x, y) => st.d * (num(x[st.u]) - num(y[st.u])));
+  const s = u => L.reduce((x, o) => x + num(o[u]), 0), g = {}; L.forEach(o => { const t = o[turU] || '—'; g[t] = g[t] || [0, 0]; g[t][0] += num(o["Ko'rishlar"]); g[t][1]++; });
+  const tk = Object.keys(g).sort((x, y) => g[y][0] / g[y][1] - g[x][0] / g[x][1]), mx = Math.max(1, ...tk.map(t => g[t][0] / g[t][1]));
+  return davrHtml() + `<div class="card"><div style="display:flex;gap:8px"><select id="f_t" style="flex:1"><option value="">Barcha turlar</option>${turlar.map(t => `<option ${t === st.t ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>
+    <select id="f_s" style="flex:1">${SR[p].map(x => `<option value="${esc(x[0])}" ${x[0] === st.u ? 'selected' : ''}>${x[1]}</option>`).join('')}</select><button class="chip" id="f_d" style="margin:4px 0">${st.d < 0 ? '↓' : '↑'}</button></div>
+    <input id="f_q" type="search" placeholder="mavzu bo'yicha qidirish" value="${esc(st.q)}"></div>
+    <div class="sum"><span>Jami <b>${L.length}</b> ta</span><span>Ko'rish <b>${n0(s("Ko'rishlar"))}</b></span><span>O'rtacha <b>${n0(L.length ? s("Ko'rishlar") / L.length : 0)}</b></span>${R ? `<span>Saqlash <b>${n0(s('Saqlash'))}</b></span>` : `<span>Javob <b>${n0(s('Javoblar'))}</b></span><span>Dostavka <b>${n0(s('Dostavka'))}</b></span>`}</div>
+    ${tk.length > 1 ? `<div class="card"><h3>Tur bo'yicha o'rtacha ko'rish</h3>${tk.map(t => `<div class="hb"><span>${esc(t)} (${g[t][1]})</span><div><i style="width:${Math.round(g[t][0] / g[t][1] / mx * 100)}%"></i></div><b>${n0(g[t][0] / g[t][1])}</b></div>`).join('')}</div>` : ''}
+    ${L.length ? L.slice(0, 120).map(x => R ? `<div class="item"><div class="tp"><span>${dmhm(x.Sana)} · ${kunNomi(kunKey(x.Sana))}</span><span class="pill ${x[turU] ? '' : 'w'}">${esc(x[turU] || 'turi yo\'q')}</span></div><div class="t">${esc(x.Mavzu || '(mavzusiz)')}</div>
+      <div class="m"><span>👁 <b>${n0(x["Ko'rishlar"])}</b></span><span>❤️ <b>${n0(x.Layk)}</b></span><span>💬 <b>${n0(x.Izoh)}</b></span><span>🔖 <b>${n0(x.Saqlash)}</b></span><span>↗️ <b>${n0(x.Ulashish)}</b></span>${x['Hook (1–5)'] != null ? `<span>🎣 <b>${x['Hook (1–5)']}</b></span>` : ''}</div>
+      ${x['Hook izoh'] ? `<div class="muted" style="font-size:13px;margin-top:4px">${esc(x['Hook izoh'])}</div>` : ''}${x.Havola ? `<a class="lnk" href="#" data-u="${esc(x.Havola)}">▶ Videoni ochish</a>` : ''}</div>`
+      : `<div class="item"><div class="tp"><span>${dmhm(x.Sana)}</span><span class="pill ${x[turU] ? '' : 'w'}">${esc(x[turU] || "turi yo'q")}</span></div>${x.Mavzu ? `<div class="t">${esc(x.Mavzu)}</div>` : ''}
+      <div class="m" style="margin-top:4px"><span>👁 <b>${n0(x["Ko'rishlar"])}</b></span><span>💬 <b>${n0(x.Javoblar)}</b></span><span>👤 <b>${n0(x["Profilga o'tish"])}</b></span><span>🚪 <b>${n0(x['Chiqib ketish'])}</b></span>${x.Direct != null ? `<span>📩 <b>${n0(x.Direct)}</b></span>` : ''}${x.Dostavka != null ? `<span>🚚 <b>${n0(x.Dostavka)}</b></span>` : ''}</div>${x.Havola ? `<a class="lnk" href="#" data-u="${esc(x.Havola)}">▶ Ochish</a>` : ''}</div>`).join('') : '<div class="empty">Bu davrda yo\'q</div>'}`;
 }
-function filtrInit(p, L, turU, sorts, hook, chizish) {
-  F[p] = { davr: '30', dir: -1, chiz: chizish };
-  const turlar = [...new Set(L.map(o => o[turU]).filter(Boolean))].sort();
-  $(p + '_f').innerHTML = `<div class="card"><div class="chips" id="${p}_davr">${DAVR.map(d => `<button data-d="${d[0]}" class="${d[0] === '30' ? 'on' : ''}">${d[1]}</button>`).join('')}</div>
-    <div class="filters more" id="${p}_oz"><label>Dan<input type="date" id="${p}_dan"></label><label>Gacha<input type="date" id="${p}_gacha"></label></div>
-    <div class="frow filters" style="margin-top:8px"><label>Tur<select id="${p}_tur"><option value="">Hammasi</option>${turlar.map(t => `<option>${esc(t)}</option>`).join('')}</select></label>
-      <label>Saralash<select id="${p}_sort">${sorts.map(x => `<option value="${esc(x[0])}">${x[1]}</option>`).join('')}</select></label>
-      <button class="ib" id="${p}_dir" title="Yo'nalish">↓</button></div>
-    <div class="filters more" id="${p}_more">
-      <label>Hafta kuni<select id="${p}_hk"><option value="">Hammasi</option><option value="ish">Ish kunlari (du–ju)</option><option value="dam">Dam olish (sh–ya)</option>${KUN.map((k, i) => `<option value="${(i + 6) % 7}">${k}</option>`).slice(1).concat(`<option value="6">Yakshanba</option>`).join('')}</select></label>
-      <label>Vaqt<select id="${p}_soat"><option value="">Hammasi</option><option value="6-12">Ertalab 06–12</option><option value="12-18">Kunduzi 12–18</option><option value="18-24">Kechqurun 18–24</option><option value="0-6">Tun 00–06</option></select></label>
-      <label>Ko'rish (dan)<input type="number" inputmode="numeric" id="${p}_min" placeholder="0"></label>
-      <label>Ko'rish (gacha)<input type="number" inputmode="numeric" id="${p}_max" placeholder="∞"></label>
-      ${hook ? `<label>Hook<select id="${p}_hook"><option value="">Hammasi</option><option value="45">4–5 (kuchli)</option><option value="3">3</option><option value="12">1–2 (zaif)</option><option value="0">Baholanmagan</option></select></label>` : ''}
-      <label class="${hook ? '' : 'full'}">Qidirish<input type="search" id="${p}_q" placeholder="mavzu bo'yicha"></label>
-    </div>
-    <div style="display:flex;justify-content:space-between"><button class="lnkbtn" id="${p}_mb">⚙️ Ko'proq filtr</button><button class="lnkbtn" id="${p}_rs">↺ Tozalash</button></div></div>`;
-  $(p + '_davr').onclick = e => { const b = e.target.closest('button'); if (!b) return; F[p].davr = b.dataset.d; $(p + '_davr').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
-    $(p + '_oz').classList.toggle('on', b.dataset.d === 'oz'); if (b.dataset.d === 'oz' && !$(p + '_dan').value) { $(p + '_dan').value = qoshKun(kunKey(Date.now()), -29); $(p + '_gacha').value = kunKey(Date.now()); } chizish(); };
-  $(p + '_dir').onclick = () => { F[p].dir *= -1; $(p + '_dir').textContent = F[p].dir < 0 ? '↓' : '↑'; chizish(); };
-  $(p + '_mb').onclick = () => $(p + '_more').classList.toggle('on');
-  $(p + '_rs').onclick = () => { ['_tur', '_hk', '_soat', '_min', '_max', '_hook', '_q'].forEach(x => { const e = $(p + x); if (e) e.value = ''; }); $(p + '_davr').querySelector('[data-d="30"]').click(); };
-  ['_dan', '_gacha', '_tur', '_sort', '_q', '_hk', '_soat', '_min', '_max', '_hook'].forEach(x => { const e = $(p + x); if (e) e.oninput = chizish; });
-  chizish();
-}
-// davr: [dan, gacha] — boshqa davr bilan solishtirish uchun
-function filtr(p, L, turU, davr) {
-  const [dan, gacha] = davr || davrSana(p), v = x => $(p + x) ? $(p + x).value : '';
-  const tur = v('_tur'), so = v('_sort'), q = v('_q').toLowerCase(), hkun = v('_hk'), sv = v('_soat'), mn = v('_min'), mx = v('_max'), hook = v('_hook');
-  return L.filter(o => {
-    const k = kunKey(o.Sana), d = hk(k), kor = num(o["Ko'rishlar"]), h = o['Hook (1–5)'];
-    if ((dan && k < dan) || (gacha && k > gacha) || (tur && o[turU] !== tur)) return false;
-    if (q && !String(o.Mavzu || '').toLowerCase().includes(q)) return false;
-    if (hkun && !(hkun === 'ish' ? d < 5 : hkun === 'dam' ? d >= 5 : d === Number(hkun))) return false;
-    if (sv) { const [a, b] = sv.split('-').map(Number), c = soat(o.Sana); if (c < a || c >= b) return false; }
-    if (mn !== '' && kor < Number(mn)) return false;
-    if (mx !== '' && kor > Number(mx)) return false;
-    if (hook && !(hook === '45' ? h >= 4 : hook === '3' ? h === 3 : hook === '12' ? (h >= 1 && h <= 2) : h == null)) return false;
-    return true;
-  }).sort((a, b) => F[p].dir * (num(a[so]) - num(b[so])));
-}
-// Oldingi xuddi shunday uzunlikdagi davr bilan solishtirish
-function solishtir(p, L, turU, joriy) {
-  const [dan, gacha] = davrSana(p);
-  if (!dan || !gacha) return '';
-  const uz = Math.round((Date.parse(gacha) - Date.parse(dan)) / 864e5) + 1, od = [qoshKun(dan, -uz), qoshKun(dan, -1)], O = filtr(p, L, turU, od);
-  const o = a => a.length ? a.reduce((s, x) => s + num(x["Ko'rishlar"]), 0) / a.length : 0, f = (a, b) => b ? ((a - b) / b >= 0 ? '<span class="ok">▲ ' : '<span class="bad">▼ ') + Math.abs(Math.round((a - b) / b * 100)) + '%</span>' : '';
-  return `Oldingi ${uz} kun (${od[0].slice(8)}.${od[0].slice(5, 7)}–${od[1].slice(8)}.${od[1].slice(5, 7)}): <b>${O.length}</b> ta, o'rtacha <b>${n0(o(O))}</b> ko'rish → hozir ${f(joriy.length, O.length) || '—'} soni, ${f(o(joriy), o(O)) || '—'} o'rtacha`;
-}
-function reelsInit() { filtrInit('r', D.R, 'Kontent turi', [["Ko'rishlar", "Ko'rish"], ['Sana', 'Sana'], ['Saqlash', 'Saqlash'], ['Ulashish', 'Ulashish'], ['Layk', 'Layk'], ['Izoh', 'Izoh'], ['Tomosha (s)', 'Tomosha vaqti'], ['Hook (1–5)', 'Hook']], true, reelsChiz); }
-function reelsChiz() {
-  const L = filtr('r', D.R, 'Kontent turi'), s = u => L.reduce((a, o) => a + num(o[u]), 0), o = u => L.length ? s(u) / L.length : 0;
-  $('r_sum').innerHTML = `<span>Jami <b>${L.length}</b> ta</span><span>Ko'rish <b>${n0(s("Ko'rishlar"))}</b></span><span>O'rtacha <b>${n0(o("Ko'rishlar"))}</b></span><span>Saqlash o'rt. <b>${n0(o('Saqlash'))}</b></span><span>Ulashish o'rt. <b>${n0(o('Ulashish'))}</b></span>`; $('r_cmp').innerHTML = solishtir('r', D.R, 'Kontent turi', L);
-  const g = {}; L.forEach(x => { const t = x['Kontent turi'] || '—'; g[t] = g[t] || [0, 0]; g[t][0] += num(x["Ko'rishlar"]); g[t][1]++; });
-  const tk = Object.keys(g).sort((a, b) => g[b][0] / g[b][1] - g[a][0] / g[a][1]);
-  chart('r_chart', { type: 'bar', data: { labels: tk.map(t => t + ' (' + g[t][1] + ')'), datasets: [{ label: "O'rtacha ko'rish", data: tk.map(t => Math.round(g[t][0] / g[t][1])), backgroundColor: RANG(), borderRadius: 3 }] },
-    options: { indexAxis: 'y', scales: { x: { grid: { color: 'rgba(127,127,127,.15)' }, ticks: { callback: v => v >= 1000 ? Math.round(v / 1000) + 'k' : v } }, y: { grid: { display: false } } } } });
-  $('r_chart').parentElement.style.height = Math.max(120, tk.length * 30 + 30) + 'px';
-  $('r_list').innerHTML = L.length ? L.slice(0, 150).map(x => `<div class="item"><div class="top"><span>${dmhm(x.Sana)} · ${kunNomi(x.Sana)}</span><span class="chip">${esc(x['Kontent turi'] || '—')}</span></div>
-    <div class="t">${esc(x.Mavzu || '(mavzusiz)')}</div>
-    <div class="m"><span>👁 <b>${n0(x["Ko'rishlar"])}</b></span><span>❤️ <b>${n0(x.Layk)}</b></span><span>💬 <b>${n0(x.Izoh)}</b></span><span>🔖 <b>${n0(x.Saqlash)}</b></span><span>↗️ <b>${n0(x.Ulashish)}</b></span>${x['Tomosha (s)'] != null ? `<span>⏱ <b>${Number(x['Tomosha (s)']).toFixed(1)}s</b></span>` : ''}${x['Hook (1–5)'] != null ? `<span>Hook <b>${x['Hook (1–5)']}</b></span>` : ''}</div>
-    ${x['Hook izoh'] ? `<div class="muted" style="font-size:13px;margin-top:4px">${esc(x['Hook izoh'])}</div>` : ''}
-    ${x.Havola ? `<a class="lnk" href="#" data-u="${esc(x.Havola)}">▶ Videoni ochish</a>` : ''}</div>`).join('') : '<div class="empty">Bu filtr bo\'yicha reels yo\'q</div>';
-}
-function storyInit() { filtrInit('s', D.S, 'Story turi', [['Sana', 'Sana'], ["Ko'rishlar", "Ko'rish"], ['Javoblar', 'Javob'], ["Profilga o'tish", "Profilga o'tish"], ['Chiqib ketish', 'Chiqib ketish'], ['Direct', 'Direct'], ['Dostavka', 'Dostavka']], false, storyChiz); }
-function storyChiz() {
-  const L = filtr('s', D.S, 'Story turi'), s = u => L.reduce((a, o) => a + num(o[u]), 0);
-  $('s_sum').innerHTML = `<span>Jami <b>${L.length}</b> ta</span><span>Ko'rish <b>${n0(s("Ko'rishlar"))}</b></span><span>O'rtacha <b>${n0(L.length ? s("Ko'rishlar") / L.length : 0)}</b></span><span>Javob <b>${n0(s('Javoblar'))}</b></span><span>Direct <b>${n0(s('Direct'))}</b></span><span>Dostavka <b>${n0(s('Dostavka'))}</b></span>`; $('s_cmp').innerHTML = solishtir('s', D.S, 'Story turi', L);
-  $('s_list').innerHTML = L.length ? L.slice(0, 200).map(x => `<div class="item"><div class="top"><span>${dmhm(x.Sana)}</span><span class="chip">${esc(x['Story turi'] || '—')}</span></div>
-    ${x.Mavzu ? `<div class="t">${esc(x.Mavzu)}</div>` : ''}
-    <div class="m" style="margin-top:4px"><span>👁 <b>${n0(x["Ko'rishlar"])}</b></span><span>💬 <b>${n0(x.Javoblar)}</b></span><span>👤 <b>${n0(x["Profilga o'tish"])}</b></span><span>⏭ <b>${n0(x.Oldinga)}</b></span><span>🚪 <b>${n0(x['Chiqib ketish'])}</b></span>${x.Direct != null ? `<span>Direct <b>${n0(x.Direct)}</b></span>` : ''}</div>
-    ${x.Havola ? `<a class="lnk" href="#" data-u="${esc(x.Havola)}">▶ Ochish</a>` : ''}</div>`).join('') : '<div class="empty">Bu filtr bo\'yicha story yo\'q</div>';
+function filtrUlash() {
+  const st = SORT[BET] = SORT[BET] || { u: SR[BET][0][0], d: -1, t: '', q: '' };
+  const f = () => { st.t = $('f_t').value; st.u = $('f_s').value; st.q = $('f_q').value; chiz(true); };
+  $('f_t').onchange = f; $('f_s').onchange = f; $('f_q').onchange = f; $('f_d').onclick = () => { st.d *= -1; chiz(true); };
 }
 document.addEventListener('click', e => { const a = e.target.closest('[data-u]'); if (a) { e.preventDefault(); open(a.dataset.u); } });
 
-// ---------- REJA ----------
+// ---------- DIZAYN ----------
+function dizayn() {
+  const [a, b] = davr(), Z = D.Z.filter(o => inD(o.Sana, a, b)).sort((x, y) => y.Sana - x.Sana), ega = D.rol === 'Ega' || D.rol === 'Admin';
+  const j = Z.reduce((x, o) => x + num(o['Dizaynlar soni']), 0), tur = {}, kun = {};
+  Z.forEach(o => { const n = num(o['Dizaynlar soni']); tur[o.Tur || '—'] = (tur[o.Tur || '—'] || 0) + n; const k = kunKey(o.Sana); kun[k] = (kun[k] || 0) + n; });
+  const ks = Object.keys(kun).sort(), mx = Math.max(1, ...ks.map(k => kun[k])), tk = Object.keys(tur).sort((x, y) => tur[y] - tur[x]), tm = Math.max(1, ...tk.map(t => tur[t]));
+  return davrHtml() + `<div class="tiles">${tile('Jami dizayn', n0(j) + ' ta', Z.length + ' ta ish')}${tile('Kuniga', (j / kunlar(a, b)).toFixed(1), "o'rtacha")}</div>
+    ${tk.length ? `<div class="card"><h3>Tur bo'yicha</h3>${tk.map(t => `<div class="hb"><span>${esc(t)}</span><div><i style="width:${Math.round(tur[t] / tm * 100)}%"></i></div><b>${tur[t]}</b></div>`).join('')}</div>` : ''}
+    ${ks.length ? `<div class="card"><h3>Kunlar</h3><div class="cols">${ks.map(k => `<i style="height:${Math.round(kun[k] / mx * 100)}%" title="${sana2(k)} · ${kun[k]}"></i>`).join('')}</div></div>` : ''}
+    ${Z.length ? Z.slice(0, 120).map(o => `<div class="item"><div class="tp"><span>${dm(o.Sana)} · ${kunNomi(kunKey(o.Sana))}</span><span class="pill">${esc(o.Tur || '')}</span></div><div class="t">${esc(o.Mavzu || '—')}</div>
+      <div class="m"><span>Dizayn <b>${n0(o['Dizaynlar soni'])}</b></span>${ega && o.Kim ? `<span>${esc(o.Kim)}</span>` : ''}<span>${esc(o.Manba || '')}</span></div></div>`).join('') : '<div class="empty">Bu davrda dizayn yozuvi yo\'q</div>'}`;
+}
+
+// ---------- KO'PROQ ----------
+function koproq() {
+  const l = [['reja', '📋', 'Reja', true], ['obunachi', '👥', 'Obunachilar', !!D.obunachi], ['komment', '💬', 'Kommentlar', !!D.komment], ['tizim', '⚙️', 'Tizim', !!D.tizim]].filter(x => x[3]);
+  return `<div class="card">${l.map(x => `<div class="row" data-go="${x[0]}" style="cursor:pointer"><div style="font-size:20px">${x[1]}</div><div style="flex:1;font-weight:600;padding-top:2px">${x[2]}</div><div class="muted">›</div></div>`).join('')}</div>`;
+}
+function koproqUlash() { document.querySelectorAll('[data-go]').forEach(r => r.onclick = () => { BET = r.dataset.go; chiz(); window.scrollTo(0, 0); }); }
+
 function reja() {
   const L = D.J.filter(o => o.Sana).sort((a, b) => a.Sana - b.Sana), bugun = kunKey(Date.now()), g = {};
   L.forEach(o => { const k = kunKey(o.Sana); (g[k] = g[k] || []).push(o); });
-  const ks = Object.keys(g).sort().filter(k => k >= kunKey(Date.now() - 7 * 864e5));
-  const bel = h => /✔/.test(h) ? '<span class="ok">✔</span>' : /✖/.test(h) ? '<span class="bad">✖</span>' : '<span class="muted">…</span>';
+  const ks = Object.keys(g).sort().filter(k => k >= qosh(bugun, -7)), bel = h => /✔/.test(h) ? '<span class="ok">✔</span>' : /✖/.test(h) ? '<span class="bad">✖</span>' : '<span class="muted">…</span>';
   const bajar = L.filter(o => kunKey(o.Sana) < bugun), ok = bajar.filter(o => /✔/.test(o.Holat)).length;
-  $('reja').innerHTML = (bajar.length ? `<div class="tiles">${tile("O'tgan kunlar", ok + ' / ' + bajar.length, 'rejaga mos joylangan', ok / bajar.length)}${tile('Bugun', (g[bugun] || []).length + ' ta', 'rejada')}</div>` : '') +
-    (ks.length ? ks.map(k => { const q = g[k]; return `<div class="day">${kunNomi(q[0].Sana)} · ${dm(q[0].Sana)}${k === bugun ? ' · <span class="chip">bugun</span>' : ''}</div><div class="card">` +
-      q.map(o => `<div class="row">${bel(o.Holat)}<div>${o.Turi === 'Reels' ? '🎬' : '📱'} <b>${esc(o['Kontent turi'])}</b><div class="muted" style="font-size:13px">${esc(o["G'oya"] || '')}</div></div></div>`).join('') + '</div>'; }).join('')
-      : '<div class="empty">Reja hali tuzilmagan. Reja har dushanba 08:00 da AI tomonidan tuziladi.</div>');
+  return back() + (bajar.length ? `<div class="tiles">${tile("O'tgan kunlar", ok + ' / ' + bajar.length, 'rejaga mos', ok / bajar.length)}${tile('Bugun', (g[bugun] || []).length + ' ta', 'rejada')}</div>` : '') +
+    (ks.length ? ks.map(k => `<div style="font-weight:700;margin:12px 2px 6px">${kunNomi(k)} · ${sana2(k)}${k === bugun ? ' · <span class="pill">bugun</span>' : ''}</div><div class="card">` + g[k].map(o => `<div class="row">${bel(o.Holat)}<div>${o.Turi === 'Reels' ? '🎬' : '📱'} <b>${esc(o['Kontent turi'])}</b><div class="muted" style="font-size:13px">${esc(o["G'oya"] || '')}</div></div></div>`).join('') + '</div>').join('') : '<div class="empty">Reja hali tuzilmagan.</div>');
 }
-
-// ---------- OBUNACHILAR ----------
+const back = () => `<div class="chips"><button class="chip" onclick="BET='koproq';chiz()">← Ko'proq</button></div>`;
 function obunachi() {
-  const O = rows(D.obunachi).filter(o => o.Sana).sort((a, b) => a.Sana - b.Sana), T = rows(D.telegram).filter(o => o.Sana).sort((a, b) => a.Sana - b.Sana);
-  const ox = [...O].reverse().find(o => typeof o['Jami obunachi'] === 'number') || {}, tx = T[T.length - 1] || {};
-  const s30 = O.slice(-30).reduce((a, o) => a + num(o["O'sish"]), 0), b30 = O.slice(-30).reduce((a, o) => a + num(o["Obuna bo'lgan"]), 0);
-  $('obunachi').innerHTML = `<div class="tiles">${tile('Instagram', n0(ox['Jami obunachi']), "30 kunda " + sgn(s30))}${tile("Obuna bo'lgan", n0(b30), '30 kunda')}${tile('Telegram @allmaxuz', n0(tx.Obunachi), tx["O'sish"] != null ? 'kecha ' + sgn(tx["O'sish"]) : '')}${tile("O'rtacha o'sish", sgn(O.slice(-30).length ? s30 / O.slice(-30).length : 0), 'kuniga')}</div>
-    <div class="card"><h3>Kunlik o'sish · 60 kun</h3><div><canvas id="c_ob" height="190"></canvas></div></div>
-    <div class="card"><h3>Oxirgi 14 kun</h3>${[...O].reverse().slice(0, 14).map(o => `<div class="row"><div style="flex:1">${dm(o.Sana)} · ${kunNomi(o.Sana)}</div><div class="${num(o["O'sish"]) < 0 ? 'bad' : 'ok'}">${sgn(o["O'sish"])}</div><div class="muted" style="width:90px;text-align:right">${n0(o['Jami obunachi'])}</div></div>`).join('')}</div>`;
-  const L = O.slice(-60);
-  chart('c_ob', { type: 'bar', data: { labels: L.map(o => dm(o.Sana)), datasets: [{ label: "O'sish", data: L.map(o => num(o["O'sish"])), backgroundColor: L.map(o => num(o["O'sish"]) < 0 ? '#D64545' : RANG()), borderRadius: 2 }] } });
+  const [a, b] = davr(), O = rows(D.obunachi).filter(o => o.Sana).sort((x, y) => x.Sana - y.Sana), T = rows(D.telegram).filter(o => o.Sana).sort((x, y) => x.Sana - y.Sana), L = O.filter(o => inD(o.Sana, a, b));
+  const ox = [...O].reverse().find(o => typeof o['Jami obunachi'] === 'number') || {}, tx = T[T.length - 1] || {}, sm = L.reduce((x, o) => x + num(o["O'sish"]), 0), ob = L.reduce((x, o) => x + num(o["Obuna bo'lgan"]), 0), mx = Math.max(1, ...L.map(o => Math.abs(num(o["O'sish"]))));
+  return back() + davrHtml() + `<div class="tiles">${tile('Instagram', n0(ox['Jami obunachi']), 'davrda ' + sgn(sm))}${tile("Obuna bo'lgan", n0(ob), 'davrda')}${tile('Telegram @allmaxuz', n0(tx.Obunachi), tx["O'sish"] != null ? 'kecha ' + sgn(tx["O'sish"]) : '')}${tile("O'rtacha o'sish", sgn(L.length ? sm / L.length : 0), 'kuniga')}</div>
+    <div class="card"><h3>Kunlik o'sish</h3><div class="cols">${L.map(o => `<i style="height:${Math.round(Math.abs(num(o["O'sish"])) / mx * 100)}%;${num(o["O'sish"]) < 0 ? 'background:var(--r)' : ''}" title="${dm(o.Sana)} · ${sgn(o["O'sish"])}"></i>`).join('')}</div></div>`;
 }
-
-// ---------- KOMMENTLAR ----------
 function komment() {
-  const L = rows(D.komment).sort((a, b) => b.Sana - a.Sana), sana = k => { const m = {}; L.forEach(o => { const x = o[k] || '—'; m[x] = (m[x] || 0) + 1; }); return m; };
-  const mv = sana('Mavzu'), kf = sana('Kayfiyat'), jav = L.filter(o => o['Javob berilgan'] === "Yo'q").length;
-  $('komment').innerHTML = `<div class="tiles">${tile('30 kunda', L.length + ' ta', 'komment')}${tile('Javobsiz', jav + ' ta', L.length ? pr(jav / L.length) + ' kommentlar' : '')}</div>
-    <div class="card"><h3>Mavzu</h3><div><canvas id="c_km" height="${Math.max(110, Object.keys(mv).length * 26 + 20)}"></canvas></div>
-      <div class="m" style="margin-top:8px">${Object.keys(kf).map(k => `<span class="${k === 'Salbiy' ? 'bad' : k === 'Ijobiy' ? 'ok' : ''}">${esc(k)} <b>${kf[k]}</b></span>`).join('')}</div></div>
-    <div class="seg" id="kseg"><button data-f="" class="on">Hammasi</button><button data-f="j">Javobsiz</button><button data-f="s">Salbiy</button></div><div id="klist"></div>`;
-  const mk = Object.keys(mv).sort((a, b) => mv[b] - mv[a]);
-  chart('c_km', { type: 'bar', data: { labels: mk, datasets: [{ data: mk.map(k => mv[k]), backgroundColor: RANG(), borderRadius: 3 }] }, options: { indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { grid: { color: 'rgba(127,127,127,.15)' } }, y: { grid: { display: false } } } } });
-  const chiz = f => $('klist').innerHTML = L.filter(o => !f || (f === 'j' ? o['Javob berilgan'] === "Yo'q" : o.Kayfiyat === 'Salbiy')).slice(0, 100).map(o => `<div class="item"><div class="top"><span>${dmhm(o.Sana)} · @${esc(o.Muallif)}</span><span>${o['Javob berilgan'] === 'Ha' ? '<span class="ok">javob berilgan</span>' : o['Javob berilgan'] === '—' ? '<span class="muted">konkurs</span>' : '<span class="warn">javobsiz</span>'}</span></div>
-    <div class="t" style="font-weight:500">${esc(o.Matn)}</div><div class="m"><span class="chip">${esc(o.Mavzu || '—')}</span><span class="${o.Kayfiyat === 'Salbiy' ? 'bad' : ''}">${esc(o.Kayfiyat || '')}</span><span>${esc(String(o['Kontent mavzusi'] || '').slice(0, 40))}</span></div>
-    ${o.Havola ? `<a class="lnk" href="#" data-u="${esc(o.Havola)}">Postni ochish</a>` : ''}</div>`).join('') || '<div class="empty">Yo\'q</div>';
-  $('kseg').onclick = e => { const b = e.target.closest('button'); if (!b) return; $('kseg').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); chiz(b.dataset.f); };
-  chiz('');
+  const [a, b] = davr(), L = rows(D.komment).filter(o => inD(o.Sana, a, b)).sort((x, y) => y.Sana - x.Sana), jav = L.filter(o => o['Javob berilgan'] === "Yo'q").length;
+  return back() + davrHtml() + `<div class="tiles">${tile('Kommentlar', L.length + ' ta', 'davrda')}${tile('Javobsiz', jav + ' ta', L.length ? pr(jav / L.length) : '')}</div>` +
+    (L.length ? L.slice(0, 100).map(o => `<div class="item"><div class="tp"><span>${dmhm(o.Sana)} · @${esc(o.Muallif)}</span><span class="${o['Javob berilgan'] === 'Ha' ? 'ok' : 'warn'}">${o['Javob berilgan'] === 'Ha' ? '✔ javob berilgan' : 'javobsiz'}</span></div><div class="t" style="font-weight:500">${esc(o.Matn)}</div>
+      <div class="m"><span class="pill">${esc(o.Mavzu || '—')}</span><span class="${o.Kayfiyat === 'Salbiy' ? 'bad' : ''}">${esc(o.Kayfiyat || '')}</span></div>${o.Havola ? `<a class="lnk" href="#" data-u="${esc(o.Havola)}">Postni ochish</a>` : ''}</div>`).join('') : '<div class="empty">Bu davrda yo\'q</div>');
 }
-
-// ---------- PUSH ----------
-function push() {
-  const L = rows(D.push).sort((a, b) => b.Sana - a.Sana), k = L.filter(o => o.Holat === 'Kutmoqda').length;
-  $('push').innerHTML = `<div class="card muted" style="font-size:13px">Tasdiqlash botda: push xabari ostidagi tugmalar yoki botda /push. ${k ? `<b class="warn">${k} ta kutmoqda.</b>` : ''}</div>` +
-    (L.length ? L.map(o => `<div class="item"><div class="top"><span>${dmhm(o.Sana)}</span><span class="${o.Holat === 'Kutmoqda' ? 'warn' : o.Holat === 'Rad etildi' ? 'bad' : 'ok'}">${esc(o.Holat)}</span></div>
-      <div class="t" style="font-weight:500">${esc(o.Matn)}</div><div class="muted" style="font-size:13px">${esc(o.Reels || '')}${o.Kim ? ' · ' + esc(o.Kim) : ''}</div>
-      ${o.Havola ? `<a class="lnk" href="#" data-u="${esc(o.Havola)}">Reelsni ochish</a>` : ''}</div>`).join('') : '<div class="empty">Push loyihalari hali yo\'q</div>');
-}
-
-// ---------- TIZIM (Ega) ----------
 function tizim() {
-  const t = D.tizim, X = rows(D.xarajat), m = {}; let jami = 0;
-  X.forEach(o => { const v = num(o.$); jami += v; m[o.Vazifa || '—'] = (m[o.Vazifa || '—'] || 0) + v; });
+  const t = D.tizim, X = rows(D.xarajat), m = {}; let jami = 0; X.forEach(o => { const v = num(o.$); jami += v; m[o.Vazifa || '—'] = (m[o.Vazifa || '—'] || 0) + v; });
   const bel = { OK: '✅', DIQQAT: '⚠️', XATO: '⛔' };
-  $('tizim').innerHTML = `<div class="tiles">${tile('Tizim holati', (bel[t.holat] || '') + ' ' + esc(t.holat), t.vaqt ? 'tekshirildi ' + dmhm(t.vaqt) : '')}${tile('Bugungi ish vaqti', t.ish + ' / ' + t.limit, 'daqiqa' + (t.pauza ? ' · ⏸ pauza' : ''), t.ish / (t.limit || 1))}
-    ${tile('AI xarajat', '$' + jami.toFixed(2), 'shu oy')}${tile('Bot odamlari', D.odamlar.length, 'ta')}</div>
-    <div class="card"><h3>Muammolar</h3>${t.muammo.length ? t.muammo.map(x => `<div class="row"><div>${bel[x.holat] || '•'}</div><div><b>${esc(x.nom)}</b><div class="muted" style="font-size:13px">${esc(x.tashxis)}${x.kim ? ' — ' + esc(x.kim) : ''}</div></div></div>`).join('') : '<div class="ok">Muammo yo\'q</div>'}</div>
-    <div class="card"><h3>AI xarajat · vazifa bo'yicha</h3>${Object.keys(m).sort((a, b) => m[b] - m[a]).map(k => `<div class="row"><div style="flex:1">${esc(k)}</div><b>$${m[k].toFixed(2)}</b></div>`).join('') || '<div class="muted">Yo\'q</div>'}</div>
-    <div class="card"><h3>Bot odamlari</h3>${D.odamlar.map(o => `<div class="row"><div style="flex:1">${esc(o.ism)} <span class="muted">${esc(o.username || '')}</span></div><span class="chip">${esc(o.rol)}</span></div>`).join('')}
-      <div class="muted" style="font-size:12px;margin-top:6px">Rol berish / o'chirish — botda /odamlar</div></div>`;
+  return back() + `<div class="tiles">${tile('Tizim holati', (bel[t.holat] || '') + ' ' + esc(t.holat), t.vaqt ? 'tekshirildi ' + dmhm(t.vaqt) : '')}${tile('Bugungi ish vaqti', t.ish + ' / ' + t.limit, 'daqiqa' + (t.pauza ? ' · pauza' : ''), t.ish / (t.limit || 1))}${tile('AI xarajat', '$' + jami.toFixed(2), 'shu oy')}${tile('Bot odamlari', D.odamlar.length, 'ta')}</div>
+    <div class="card"><h3>Muammolar</h3>${t.muammo.length ? t.muammo.map(x => `<div class="row"><div>${bel[x.holat] || '•'}</div><div><b>${esc(x.nom)}</b><div class="muted" style="font-size:13px">${esc(x.tashxis)}${x.kim ? ' — ' + esc(x.kim) : ''}</div></div></div>`).join('') : '<div class="ok">Hammasi joyida</div>'}</div>
+    <div class="card"><h3>AI xarajat · vazifa bo'yicha</h3>${Object.keys(m).sort((x, y) => m[y] - m[x]).map(k => `<div class="row"><div style="flex:1">${esc(k)}</div><b>$${m[k].toFixed(2)}</b></div>`).join('') || '<div class="muted">Yo\'q</div>'}</div>
+    <div class="card"><h3>Bot odamlari</h3>${D.odamlar.map(o => `<div class="row"><div style="flex:1">${esc(o.ism)} <span class="muted">${esc(o.username || '')}</span></div><span class="pill">${esc(o.rol)}</span></div>`).join('')}</div>`;
 }
 
-// ---------- AI CHAT ----------
-function aiInit() {
-  msg('bot', `Salom${D.ism ? ', ' + D.ism : ''}! Istalgan savolni o'z so'zingiz bilan yozing — bazadan topib, hisoblab beraman. Davr, tur, kun, soat, solishtirish — qanday bo'lsa ham.`);
+// ---------- AI ----------
+const SUGG = { Ega: ["Oxirgi 7 kunda dizayner nechta dizayn qildi?", "Turi yo'q reelslarni ko'rsat", "Javobsiz kommentlar nechta?", "Nega xato bor?"], Admin: ["Javobsiz kommentlar nechta?", "Bu hafta nechta reels joylandi?"], Mobilograf: ["Bugun nechta reels qoldi?", "Eng yaxshi reelsim qaysi?"], Storismaker: ["Bugun nechta story qoldi?"], Dizayner: ["Bu oy nechta dizayn qildim?"] };
+let MSG = [];
+function ai() {
+  return `<div class="msgs" id="msgs">${MSG.length ? MSG.map(m => `<div class="msg ${m[0]}">${esc(m[1])}</div>`).join('') : `<div class="msg bot">Salom${D.ism ? ', ' + esc(D.ism) : ''}! Istalgan savolni yozing — bazadan topib, hisoblab beraman. Davrni o'zingiz yozing: «3-noyabrdan 20-noyabrgacha…».\nO'zgartirish kerak bo'lgan amallar (tur belgilash, eslatma) tasdiq tugmasi bilan botda bajariladi.</div><div class="sugg">${(SUGG[D.rol] || []).map(s => `<button>${esc(s)}</button>`).join('')}</div>`}</div>
+    <div class="ask"><textarea id="q" rows="1" placeholder="Savol yozing…"></textarea><button id="send" aria-label="Yuborish">➤</button></div>`;
+}
+let band = false;
+function aiUlash() {
   $('send').onclick = () => yubor($('q').value);
   $('q').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); yubor($('q').value); } });
   $('q').addEventListener('input', () => { $('q').style.height = 'auto'; $('q').style.height = Math.min(110, $('q').scrollHeight) + 'px'; });
+  document.querySelectorAll('.sugg button').forEach(b => b.onclick = () => yubor(b.textContent));
 }
-function msg(kim, t, wait) {
-  const d = document.createElement('div'); d.className = 'msg ' + kim + (wait ? ' wait' : ''); d.textContent = t; $('msgs').appendChild(d);
-  window.scrollTo(0, document.body.scrollHeight); return d;
-}
-let band = false;
 async function yubor(t) {
-  t = String(t || '').trim(); if (!t || band) return;
-  band = true; $('send').disabled = true; $('q').value = ''; $('q').style.height = 'auto'; 
-  msg('me', t); const w = msg('bot', '🤖 bazadan qidiryapman…', true);
-  try { const r = await api({ amal: 'savol', savol: t }); w.classList.remove('wait'); w.textContent = r.javob || r.xato || 'Javob kelmadi.'; }
-  catch (e) { w.classList.remove('wait'); w.textContent = "Aloqa uzildi. Qayta yuboring."; }
-  band = false; $('send').disabled = false; window.scrollTo(0, document.body.scrollHeight);
+  t = String(t || '').trim(); if (!t || band) return; band = true;
+  MSG.push(['me', t]); MSG.push(['bot wait', '🤖 bazadan qidiryapman…']); chiz(true); window.scrollTo(0, document.body.scrollHeight);
+  let j; try { const r = await api({ amal: 'savol', savol: t }); j = r.javob || r.xato || 'Javob kelmadi.'; } catch (e) { j = "Aloqa uzildi. Qayta yuboring."; }
+  MSG[MSG.length - 1] = ['bot', j]; band = false; if (BET === 'ai') { chiz(true); window.scrollTo(0, document.body.scrollHeight); }
   if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
 }
 
-start();
+// ---------- BOSHLASH: oxirgi holat darhol, yangisi orqada ----------
+(function () {
+  try { const s = lsGet('kb_D'); if (s) { D = prep(JSON.parse(s)); $('sub').textContent = (D.ism || '') + ' · ' + D.rol + ' · ' + dmhm(D.vaqt) + ' (saqlangan)'; nav(); chiz(); } } catch (e) { D = null; }
+  yangila(!!D);
+  setInterval(() => { if (!document.hidden && BET !== 'ai') yangila(true); }, 120000);
+})();
 </script>
 </body>
 </html>
